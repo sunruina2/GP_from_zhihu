@@ -13,11 +13,11 @@ def gaussian_kernel(x1, x2, l=0.5, sigma_f=0.2):
     return sigma_f ** 2 * np.exp(-0.5 / l ** 2 * dist_matrix)
 
 
+# 假设我们的未知函数的groudtruth是 sin函数，我们通过 gp来逐步拟合出来它的形状
 # 生成观测值,取sin函数没有别的用意,单纯就是为了计算出Y def gety(X)
 def getY(X):
     X = np.asarray(X)
-    # Y = np.sin(X) * 0.4 + np.random.normal(0, 0.05, size=X.shape)
-    Y = np.sin(X) + np.random.normal(0, 0.05, size=X.shape)
+    Y = np.sin(X)
     return Y.tolist()
 
 
@@ -48,7 +48,7 @@ ax[0].plot(X_pre, Y_pre, Label="expection")
 ax[0].legend()
 
 # 绘制基于观测值的高斯过程后验
-X_sample = np.array([1, 3, 7, 9]).reshape(-1, 1)  # 4*1矩阵
+X_sample = np.array([0, 1, 2, 3, 4, 5, 6, 6.18]).reshape(-1, 1)  # 4*1矩阵
 Y_sample = getY(X_sample)
 X_star = np.arange(0, 10, 0.1).reshape(-1, 1)
 mu_star, cov_star = update(X_sample, Y_sample, X_star)
